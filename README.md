@@ -1,3 +1,4 @@
 # LevelUP_Junior
-LevelUP_Junior
-README
+
+Курс Junior Developer. 
+Примеры задач
