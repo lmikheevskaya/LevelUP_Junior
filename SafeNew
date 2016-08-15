@@ -41,10 +41,3 @@ private:
 private:
 	T * m_p;
 };
-
-
-
-int main()
-{
-	return 0;
-}
