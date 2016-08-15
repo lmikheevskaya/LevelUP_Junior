@@ -1,0 +1,50 @@
+template <typename T>
+class SafeNew
+{
+public:
+	SafeNew(T *p=nullptr):
+	m_p(p)
+	{
+	}
+
+	~SafeNew()
+	{
+		Delete();
+	}
+
+	void reset(T *p)
+	{
+		Delete();
+		m_p=p;
+	}
+
+	T* operator()()
+	{
+		return m_p;
+	}
+
+	operator bool()
+	{
+		return (m_p != nullptr);
+	}
+
+	void Delete()
+	{
+		delete m_p;
+		m_p=nullptr;
+	}
+
+private:
+	SafeNew(const SafeNew &);
+	SafeNew &operator=(const SafeNew &);
+
+private:
+	T * m_p;
+};
+
+
+
+int main()
+{
+	return 0;
+}
