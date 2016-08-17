@@ -16,11 +16,11 @@ struct Node
 
 template<class T> ostream& operator<<(ostream& ostr, const stack<T> &_stack)
 {
-  for (Node<T> *it = _stack.m_head; it != NULL; it = it->next ){
-    ostr << it->val << " ";  
-  }   
-  ostr << std::endl;
-  return (ostr);
+  	for (Node<T> *it = _stack.m_head; it != NULL; it = it->next ){
+    	ostr << it->val << " ";  
+  	}   
+  	ostr << std::endl;
+  	return (ostr);
 }
 
 template <class T>
@@ -45,32 +45,32 @@ public:
 
 	stack<T>(const stack<T> &_stack) : m_head(nullptr)
 	{
-    clear();
+    	clear();
 		for (Node<T> *it = _stack.m_head; it != NULL; it = it->next ){
-      push(it->val);
-    }   
+      		push(it->val);
+    	}   
 	}
 
 	stack<T>& operator = (const stack<T> &_stack) 
-  {
-    clear();
-    for (Node<T> *it = _stack.m_head; it != NULL; it = it->next ){
-      push(it->val);
-    }    
+  	{
+    	clear();
+    	for (Node<T> *it = _stack.m_head; it != NULL; it = it->next ){
+      		push(it->val);
+    	}    
 
-    return *this;
-  }
+	 	return *this;
+  	}
 
-  //в деструкторе очищаем стек 
-  ~stack() 
-  {
-    clear();
-  };
+  	//в деструкторе очищаем стек 
+  	~stack() 
+  	{
+    	clear();
+  	};
 
 	//добавляем элемент в стэк
 	void push(const T &val)
 	{
-	  //выделяем память под новый элемент стека
+	  	//выделяем память под новый элемент стека
 		Node<T> *node = new_item();
 		node->val = val;
 		node->next = m_head;
@@ -83,7 +83,7 @@ public:
 		delete_stack();
 	}
 
-  //проверяем стек на пустоту
+  	//проверяем стек на пустоту
 	bool empty() const
 	{	
 		return (!m_head);
@@ -96,17 +96,17 @@ public:
 		size_t size(0);
 		for (Node<T> *it = m_head; it != NULL; it = it->next ){
 			size++;
-    }
-    return size;
+    	}
+    	return size;
 	}
   
-  //возвращвем указатель на верхний элемент стека      
-  Node<T> *top() 
-  {
+  	//возвращвем указатель на верхний элемент стека      
+  	Node<T> *top() 
+  	{
 		return  m_head;
-  }
+  	}
   
-  // удаляем верхний элемент стека
+  	// удаляем верхний элемент стека
 	void pop() 
 	{
 		Node<T> *it = m_head;
@@ -115,7 +115,7 @@ public:
 		it = NULL;
 	}
 
-  //оператор ставнения двух стеков
+  	//оператор ставнения двух стеков
 	bool operator == (stack<T> &_stack)
 	{
 		Node<T> *it;
@@ -148,21 +148,21 @@ private:
 
 	void delete_items(Node<T> *it) 
 	{
-    if (it != NULL) {
-			 if (it->next != NULL) {
+    	if (it != NULL) {
+			if (it->next != NULL) {
 				delete_items(it->next);
 			}
 			delete it;
 			it = NULL;
-    }
+    	}
 	}
 
 	void delete_stack() 
 	{
-    if (m_head != NULL) {
+    	if (m_head != NULL) {
 			delete_items(m_head);
-    }
-    m_head = NULL;
+    	}
+	 	m_head = NULL;
 	}
 
 private:
