@@ -65,13 +65,6 @@ public:
 
 		//выделяем новый кусок памяти нужного размера
 		m_array = new T[newSize];
-
-		//int copySize = 0;
-		//if (newSize > m_size)
-		//	copySize = m_size;
-		//else
-		//	copySize = newSize;
-
 		m_size = newSize;
 		if(m_number > m_size)
 			m_number = m_size;
