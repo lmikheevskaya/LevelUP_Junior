@@ -1,0 +1,51 @@
+class Bar;
+
+class Foo
+{
+public:
+	Foo() { std::cout << "Foo()" << std::endl; }
+	~Foo() { std::cout << "~Foo()" << std::endl; }
+
+	std::shared_ptr<Bar> bar;
+};
+
+
+class Bar
+{
+public:
+	Bar() { std::cout << "Bar()" << std::endl; }
+	~Bar() { std::cout << "~Bar()" << std::endl; }
+
+	std::shared_ptr<Foo> foo;
+};
+
+
+int main()
+{
+	/*
+	объект foo ссылается на bar и наоборот. Образован цикл, из-за которого не 
+	вызовутся деструкторы объектов. Для того чтобы разорвать этот цикл, достаточно в 
+	классе Bar заменить shared_ptr на weak_ptr.
+	*/
+	auto foo = std::make_shared<Foo>();
+
+	foo->bar = std::make_shared<Bar>();
+
+	foo->bar->foo = foo;
+	
+	
+	/*
+	weak_ptr не позволяет работать с ресурсом напрямую, но зато обладает 
+	методом lock(), который генерирует shared_ptr().
+	*/
+	std::shared_ptr<Foo> ptr = std::make_shared<Foo>();
+	std::weak_ptr<Foo> w(ptr);
+
+	if (std::shared_ptr<Foo> foo = w.lock())
+	{
+		foo->doSomething();
+	}
+	
+
+	return 0;
+}
