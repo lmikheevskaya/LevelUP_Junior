@@ -1,0 +1,45 @@
+#include "stdafx.h"
+#include <iostream> // потоки воода-вывода
+#include <chrono> // работа со временем
+#include <thread> // потоки выполнения
+#include <mutex> // мьютексы
+#include <string> // строки
+
+// разделяемая (общая) строка
+std::string shared_string;
+
+// мьютекс
+std::mutex mtx;
+
+// функция, которая будет запущена в два потока
+void thread_function(const std::string &str)
+{
+	// ждем две секунды
+	std::this_thread::sleep_for(std::chrono::seconds(2));
+
+	// лочим мьютекс
+	mtx.lock();
+	// тут записываем в что-то в общую переменную
+	shared_string.append(str);
+
+	// открываем мьютекс
+	mtx.unlock();
+}
+
+int main()
+{
+	// Инициализируем потоки
+	std::thread t1(thread_function, " что-то ");
+	std::thread t2(thread_function, " как-то ");
+
+	// Запускаем потоки
+	t1.join();
+	t2.join();
+
+	// Этот код выполнится только после того, как оба потока будут завершены
+	mtx.lock();
+	std::cout << shared_string;
+	mtx.unlock();
+
+	return 0;
+}
