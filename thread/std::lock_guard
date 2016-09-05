@@ -1,0 +1,30 @@
+#include <list>
+#include <mutex>
+#include <algorithm>
+
+//глобальный список
+std::list<int> some_list; 
+
+std::mutex some_mutex;
+
+//Вызов std::lock_guard<std::mutex> в add_to_list () и list_contains () означает, что доступ к списку из 
+//этих двух функций является взаимно исключающим: list_contains() никогда не увидит промежуточного результата 
+//модификации списка, выполняемой в add_to_list().
+
+void add_to_list(int new_value)
+{
+	std::lock_guard<std::mutex> guard(some_mutex);
+	some_list.push_back(new_value);
+}
+
+bool list_contains(int value_to_find)
+{
+	std::lock_guard<std::mutex> guard(some_mutex); 
+	return std::find (some_list.begin () ,some_list.end() , value_to_find)
+		!= some_list.end();
+}
+
+int main()
+{
+	return 0;
+}
