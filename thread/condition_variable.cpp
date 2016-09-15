@@ -1,5 +1,5 @@
 
-//Один, заурядный, менеджер приходит на работу звонит в звонок и ждёт пока охранник откроет ему дверь:
+
 #include <thread>
 #include <iostream>
 #include <mutex>
@@ -8,7 +8,8 @@
  
 std::condition_variable g_Bell;
 std::condition_variable_any g_Door;
- 
+
+//Один, заурядный, менеджер приходит на работу звонит в звонок и ждёт пока охранник откроет ему дверь: 
 class Manager
 {
 public:
